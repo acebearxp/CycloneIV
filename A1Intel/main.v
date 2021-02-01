@@ -1,16 +1,20 @@
-
 `timescale 1ns / 1ps
 
-module main(d, clk, clr, q, tx);
+module main(ledCLK, ledLatch, ledFF, clk50M, kSR, ,rst);
 
-input d, clk, clr;
-output q, tx;
+input clk50M, kSR, rst;
+output ledCLK, ledLatch, ledFF;
 
-wire qn;
-wire clk2;
+// 降频到1Hz方便观察
+CLK_DIV#(32'd50_000_000) clkDiv1S(clk50M, ledCLK);
 
-CLK_DIV#(.div(32'd50_000_000)) CLK1S(clk, clk2);
-D_FF ffx(~d, tx, ~clr, q);
-assign tx = clk2;
+wire x;
+assign ledLatch = x;
+
+// SR锁存器
+SR_Latch S1(.s(~kSR), .r(~rst), .q(x));
+
+// D触发器
+D_FlipFlop D1(.d(x), .clk(ledCLK), .clr(1), .q(ledFF));
 
 endmodule
