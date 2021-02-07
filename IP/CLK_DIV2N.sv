@@ -1,7 +1,7 @@
 // 分频,支持按2的n次幂分频
 module CLK_DIV2N
     #(parameter n=1)
-    (input logic clk, output logic [n:0] clkout);
+    (input logic clk, output logic [n-1:0] clkout);
 
 initial begin
     clkout = 0;

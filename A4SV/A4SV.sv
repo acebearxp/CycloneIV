@@ -1,7 +1,7 @@
 module A4SV(input logic rst, input logic clk, output logic [0:5] sel, output logic[7:0] dig, output logic tm1s);
 
 logic clk8k;
-logic[3:0] clk1k;
+logic[2:0] clk1k;
 
 // PLL 50MHz -> 8kHz
 PLL pll8k(.inclk0(clk), .c0(clk8k));
@@ -27,7 +27,7 @@ initial begin
     c <= 3'd0;
 
     disp_ms[5] <= 0;
-    disp_ms[4] <= 0;
+    disp_ms[3] <= 0;
     disp_ms[3] <= 9;
     disp_ms[2] <= 9;
     disp_ms[1] <= 9;
@@ -37,7 +37,7 @@ end
 always_comb
     dig <= out_ms[c];
 
-always_ff@(posedge clk1k[3], negedge rst) begin : block1kHz
+always_ff@(posedge clk1k[2], negedge rst) begin : block1kHz
     if(rst == 0) begin
         disp_ms[5] <= 0;
         disp_ms[4] <= 0;
