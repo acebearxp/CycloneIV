@@ -1,0 +1,13 @@
+// 十进制倒计数
+module DEC_DOWN(input logic clk, input logic rst, output logic[3:0] out[5:0]);
+
+initial begin
+    out[5] <= 0;
+    out[4] <= 0;
+    out[3] <= 9;
+    out[2] <= 9;
+    out[1] <= 9;
+    out[0] <= 9;
+end
+
+endmodule
