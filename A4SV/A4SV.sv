@@ -1,25 +1,21 @@
 module A4SV(input logic rst, input logic clk, output logic [0:5] sel, output logic[7:0] dig, output logic tm1s);
 
-logic clk8k;
+logic clk8k, clk4096;
 logic[2:0] clk1k;
+logic[11:0] clk1s;
 
-// PLL 50MHz -> 8kHz
-PLL pll8k(.inclk0(clk), .c0(clk8k));
+// PLL 50MHz -> 8kHz & 4096Hz
+PLL pll8k(.inclk0(clk), .c0(clk8k), .c1(clk4096));
 // CLK_DIV2N 8kHz -> 1kHz
 CLK_DIV2N#(3) clkDiv1k(.clk(clk8k), .clkout(clk1k));
-// CLK_DIV 1kHz -> 1Hz
-CLK_DIV#(2000) clkDiv1s(.clk(clk1k), .clkdiv(tm1s));
+// CLK_DIV2N 4096Hz -> 1Hz
+CLK_DIV2N#(12) clkDiv1s(.clk(clk4096), .clkout(clk1s));
 
 logic[2:0] c; // 当前显示跟踪
-logic[3:0] disp_ms[5:0]; // 6位显示
-logic[7:0] out_ms[5:0]; // 输出寄存器
+logic[3:0] disp_ms[5:0]; // 数值寄存器
+logic[3:0] disp_out;
 
-DIG_DEC decX0(disp_ms[0], out_ms[0]);
-DIG_DEC decX1(disp_ms[1], out_ms[1]);
-DIG_DEC decX2(disp_ms[2], out_ms[2]);
-DIG_DEC decX3(disp_ms[3], out_ms[3]);
-DIG_DEC decX4(disp_ms[4], out_ms[4]);
-DIG_DEC decX5(disp_ms[5], out_ms[5]);
+DIG_DEC decX0(disp_out, dig);
 
 initial begin
     // 电路板上定义SEL0~5从左到右依次对应
@@ -34,13 +30,13 @@ initial begin
     disp_ms[0] <= 9;
 end
 
-always_comb
-    dig <= out_ms[c];
+always_comb begin
+    disp_out <= disp_ms[c];
+    tm1s <= clk1s[11];
+end
 
 always_ff@(posedge clk1k[2], negedge rst) begin : block1kHz
     if(rst == 0) begin
-        disp_ms[5] <= 0;
-        disp_ms[4] <= 0;
         disp_ms[3] <= 9;
         disp_ms[2] <= 9;
         disp_ms[1] <= 9;
