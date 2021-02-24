@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module main(ledCLK, ledLatch, ledFF, clk50M, kSR, ,rst);
+module main(ledCLK, ledLatch, ledFF, clk50M, kSR, rst);
 
 input clk50M, kSR, rst;
 output ledCLK, ledLatch, ledFF;
