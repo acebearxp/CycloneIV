@@ -20,7 +20,7 @@
 ## PROGRAM "Quartus Prime"
 ## VERSION "Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition"
 
-## DATE    "Wed Feb 24 17:49:36 2021"
+## DATE    "Wed Feb 24 18:02:53 2021"
 
 ##
 ## DEVICE  "EP4CE10F17C8"
@@ -87,6 +87,18 @@ set_clock_uncertainty -fall_from [get_clocks {clkDiv1k}] -rise_to [get_clocks {p
 set_clock_uncertainty -fall_from [get_clocks {clkDiv1k}] -fall_to [get_clocks {pll8k|altpll_component|auto_generated|pll1|clk[0]}]  0.020  
 set_clock_uncertainty -fall_from [get_clocks {clkDiv1k}] -rise_to [get_clocks {clkDiv1k}]  0.030  
 set_clock_uncertainty -fall_from [get_clocks {clkDiv1k}] -fall_to [get_clocks {clkDiv1k}]  0.030  
+set_clock_uncertainty -rise_from [get_clocks {pll8k|altpll_component|auto_generated|pll1|clk[2]}] -rise_to [get_clocks {clkIR}]  0.020  
+set_clock_uncertainty -rise_from [get_clocks {pll8k|altpll_component|auto_generated|pll1|clk[2]}] -fall_to [get_clocks {clkIR}]  0.020  
+set_clock_uncertainty -fall_from [get_clocks {pll8k|altpll_component|auto_generated|pll1|clk[2]}] -rise_to [get_clocks {clkIR}]  0.020  
+set_clock_uncertainty -fall_from [get_clocks {pll8k|altpll_component|auto_generated|pll1|clk[2]}] -fall_to [get_clocks {clkIR}]  0.020  
+set_clock_uncertainty -rise_from [get_clocks {clkIR}] -rise_to [get_clocks {pll8k|altpll_component|auto_generated|pll1|clk[2]}]  0.020  
+set_clock_uncertainty -rise_from [get_clocks {clkIR}] -fall_to [get_clocks {pll8k|altpll_component|auto_generated|pll1|clk[2]}]  0.020  
+set_clock_uncertainty -rise_from [get_clocks {clkIR}] -rise_to [get_clocks {clkIR}]  0.030  
+set_clock_uncertainty -rise_from [get_clocks {clkIR}] -fall_to [get_clocks {clkIR}]  0.030  
+set_clock_uncertainty -fall_from [get_clocks {clkIR}] -rise_to [get_clocks {pll8k|altpll_component|auto_generated|pll1|clk[2]}]  0.020  
+set_clock_uncertainty -fall_from [get_clocks {clkIR}] -fall_to [get_clocks {pll8k|altpll_component|auto_generated|pll1|clk[2]}]  0.020  
+set_clock_uncertainty -fall_from [get_clocks {clkIR}] -rise_to [get_clocks {clkIR}]  0.030  
+set_clock_uncertainty -fall_from [get_clocks {clkIR}] -fall_to [get_clocks {clkIR}]  0.030  
 
 
 #**************************************************************
