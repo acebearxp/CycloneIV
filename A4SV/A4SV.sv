@@ -4,10 +4,9 @@ module A4SV(input logic rst, input logic clk, input logic irx,
 
 logic clk8k, clk4096, clk910k;
 
-logic[2:0] clk1k;
+logic[2:0]  clk1k;
 logic[11:0] clk1s;
-
-logic clkIR; // 外红采样时钟8倍
+logic[5:0]  clkIR; // 外红采样时钟8倍
 
 // PLL 50MHz -> 8kHz & 4096Hz & 910k
 PLL pll8k(.inclk0(clk), .c0(clk8k), .c1(clk4096), .c2(clk910k));
@@ -26,7 +25,7 @@ DEC_DOWN d1(.clk(clk1k[2]), .rst(rst), .out(disp_ms));
 
 // 红外
 logic[3:0] irCode[2:0];
-IR_RX ir(.clk(clkIR), .ir(irx), .code(irCode));
+IR_RX ir(.clk(clkIR[5]), .ir(irx), .code(irCode));
 
 // 倒计时器用3位,另外3位用于调试
 assign dispSix[5] = irCode[2];
