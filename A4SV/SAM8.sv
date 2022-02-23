@@ -14,6 +14,8 @@ always_ff@(posedge clk) begin
         out <= in;
     else if(counter == 4)
         clkout = ~clkout;
+    else if(counter == 7)
+        clkout = ~clkout;
 end
 
 endmodule

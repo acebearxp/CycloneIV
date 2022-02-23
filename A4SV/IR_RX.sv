@@ -8,6 +8,7 @@ logic sample;
 logic vx;
 
 logic[7:0] counter;
+logic[23:0] prefix;
 
 // 红外采样
 SAM8 sampler(.clk(clkIR), .in(ir), .clkout(clkSample), .out(vx));
@@ -19,13 +20,19 @@ initial begin
 end
 
 always_ff@(posedge clkSample) begin
-    if(counter == 8'd127) begin
+    if(counter == 8'd199) begin
         counter <= 8'd0;
         
         code[2] <= code[2]+1'd1;
     end
-    else
+    else begin
         counter <= counter + 1'd1;
+        
+        if(counter < 8'd24) begin
+            prefix <= {prefix[22:0], vx};
+            code[1] <= code[1]+vx;
+        end
+    end
 end
 
 always_comb begin
